@@ -36,7 +36,7 @@ class AuthController extends Controller
     {
         $this->auth = $auth;
         $this->middleware('guest', ['except' => 'getLogout']);
-
+      
     }
 
     /**
@@ -45,7 +45,7 @@ class AuthController extends Controller
      * @param  array  $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
-
+   
 
 
 //login
@@ -56,7 +56,7 @@ class AuthController extends Controller
     }
 
 
-
+       
 
         public function postLogin(Request $request)
    {
@@ -71,17 +71,19 @@ class AuthController extends Controller
 
     if ($this->auth->attempt($credentials, $request->has('remember')))
     {
-        return view("home");
+
+        $usuarioactual=\Auth::user();
+       return view('home')->with("usuario",  $usuarioactual);
     }
 
-    return view()->with("msjerror","credenciales incorrectas");
+    return "credenciales incorrectas";
 
     }
 
 
 //login
 
- //registro
+ //registro   
 
 
         protected function getRegister()
@@ -90,7 +92,7 @@ class AuthController extends Controller
     }
 
 
-
+        
 
         protected function postRegister(Request $request)
 
@@ -113,13 +115,12 @@ class AuthController extends Controller
 
     if($user->save()){
 
-        return redirect('login');
-         //return "se ha registrado correctamente el usuario";
-
+         return "se ha registrado correctamente el usuario";
+               
     }
+   
 
-
-
+   
 
 }
 
